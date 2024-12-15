@@ -3,6 +3,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { ViewUpdate } from '@codemirror/view';
 import { useState, useCallback } from 'react';
 import styles from './TextEditor.module.scss';
+import { oneDarkTheme } from '@uiw/react-codemirror';
 
 export function TextEditor() {
   const [value, setValue] = useState("console.log('hello world!');");
@@ -16,6 +17,7 @@ export function TextEditor() {
       className={styles.container}
       value={value}
       height="200px"
+      theme={oneDarkTheme}
       extensions={[javascript({ jsx: true })]}
       onChange={onChange}
     />
