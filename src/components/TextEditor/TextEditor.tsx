@@ -1,24 +1,26 @@
 import CodeMirror from '@uiw/react-codemirror';
-import { EditorView, ViewUpdate } from '@codemirror/view';
-import { useState, useCallback } from 'react';
+import { EditorView } from '@codemirror/view';
+import { useCallback } from 'react';
 import styles from './TextEditor.module.scss';
 import { tokyoNightDay } from '@uiw/codemirror-theme-tokyo-night-day';
 import { tokyoNight } from '@uiw/codemirror-theme-tokyo-night';
-import { useAppSelector } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { languageModes } from '../../constants/languageModes';
 import { syntaxTree } from '@codemirror/language';
 import { linter, Diagnostic } from '@codemirror/lint';
 import { lintGutter } from '@codemirror/lint';
+import { setTextForLanguage } from '../../redux/slices/EditorTextSlice';
 
 export function TextEditor() {
-  let { currentTheme } = useAppSelector((state) => state.theme);
-  let { activeLangIndex } = useAppSelector((state) => state.lang);
-  const [value, setValue] = useState("console.log('hello world!');");
+  const { currentTheme } = useAppSelector((state) => state.theme);
+  const { activeLangIndex, activeLangId } = useAppSelector((state) => state.lang);
+  const textObject = useAppSelector((state) => state.editorText);
+  const dispatch = useAppDispatch();
 
-  const onChange = useCallback((val: string, viewUpdate: ViewUpdate) => {
-    // console.log('val:', val);
-    // console.log(viewUpdate);
-    setValue(val);
+  console.log(activeLangId);
+
+  const onChange = useCallback((value: string) => {
+    dispatch(setTextForLanguage({ languageName: activeLangId, text: value }));
   }, []);
 
   const regexpLinter = linter((view) => {
@@ -50,8 +52,9 @@ export function TextEditor() {
 
   return (
     <CodeMirror
+      autoFocus
       className={styles.container}
-      value={value}
+      value={textObject[activeLangId]}
       height="100%"
       theme={currentTheme === 'dark' ? tokyoNight : tokyoNightDay}
       extensions={[

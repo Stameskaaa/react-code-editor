@@ -2,10 +2,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { DocumentsIcon } from '../../icons/DocumentsIcon';
 import { PlayIcon } from '../../icons/PlayIcon';
 import styles from './Header.module.scss';
-import { useState } from 'react';
 import { setTheme } from '../../redux/slices/themeSlice';
 import { languageModes } from '../../constants/languageModes';
-import { setLangIndex } from '../../redux/slices/languageSlice';
+import { setLangLanguage } from '../../redux/slices/languageSlice';
 
 export const Header = () => {
   const { activeLangIndex } = useAppSelector((state) => state.lang);
@@ -20,8 +19,8 @@ export const Header = () => {
     }
   }
 
-  function handleChangeLanguage(index: number) {
-    dispatch(setLangIndex(index));
+  function handleChangeLanguage(i: number, id: string) {
+    dispatch(setLangLanguage({ index: i, id }));
   }
 
   return (
@@ -30,7 +29,7 @@ export const Header = () => {
         {languageModes.map((langObj, i) => (
           <button
             key={langObj.name}
-            onClick={() => handleChangeLanguage(i)}
+            onClick={() => handleChangeLanguage(i, langObj.id)}
             className={`${styles.select_lang__butt} ${
               activeLangIndex === i ? styles.active : null
             }`}>

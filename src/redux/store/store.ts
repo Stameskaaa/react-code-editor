@@ -1,3 +1,4 @@
+import { editorTextReducer } from './../slices/EditorTextSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { themeReducer } from '../slices/themeSlice';
 import { languageReducer } from '../slices/languageSlice';
@@ -6,6 +7,7 @@ const store = configureStore({
   reducer: {
     theme: themeReducer,
     lang: languageReducer,
+    editorText: editorTextReducer,
   },
 });
 
