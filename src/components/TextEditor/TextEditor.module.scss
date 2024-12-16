@@ -1,10 +1,9 @@
 .container {
-  background-color: #1e1e1e; // Темный фон для редактора
-  color: #fff; // Белый текст в редакторе
-  border-radius: 4px; // Закругленные углы для эстетики
-  height: 200px; // Высота редактора
-  width: 100%; // Ширина на 100% родительского контейнера
-  margin: 0;
-  padding: 10px; // Отступы вокруг текста в редакторе
-  overflow: auto; // Если контент не помещается, прокручиваем
+  height: calc(100vh - 40px);
+  > div {
+    outline: none !important;
+  }
+  @media (width <= 470px) {
+    height: calc(100vh - 76px);
+  }
 }

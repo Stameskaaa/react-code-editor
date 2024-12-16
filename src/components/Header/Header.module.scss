@@ -1,0 +1,133 @@
+.header {
+  height: 40px;
+  padding: 5px 5px 0 5px;
+  box-sizing: border-box;
+  display: flex;
+  background-color: var(--inactive-bgcolor-dark);
+  justify-content: space-between;
+}
+
+.select_lang__buttons {
+  display: flex;
+}
+
+.select_lang__butt {
+  padding: 5px 10px;
+  border-top: 1px solid var(--border-color-dark);
+  border-left: 1px solid var(--border-color-dark);
+  color: var(--inactive-text-color);
+  &:last-child {
+    border-right: 1px solid var(--border-color-dark);
+  }
+}
+
+.active {
+  background-color: var(--bgcolor-dark);
+  color: var(--active-text-color);
+  border-top: 2px solid #1da09c;
+}
+
+.action__buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 5px;
+}
+
+.action__butt {
+  background-color: blue;
+  padding: 0 8px;
+  border-radius: 5px;
+  height: 28px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 14px;
+  transition: background-color 0.2s, border 0.2s;
+}
+
+.run__butt {
+  background-color: #28a745;
+  color: white;
+  border: 1px solid #218838;
+  border-radius: 4px;
+  &:hover,
+  &:focus {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  &:active {
+    background-color: #1e7e34;
+    border-color: #1c7430;
+  }
+}
+
+.copy_butt {
+  line-height: 14px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  &:hover,
+  &:focus {
+    background-color: #d6d8da;
+    border-color: #e2e6ea;
+  }
+
+  &:active {
+    background-color: #e2e6ea;
+    border-color: #d6d8db;
+  }
+}
+
+.theme_switch__input {
+  position: absolute;
+  opacity: 0;
+
+  &:checked + span {
+    left: 30px;
+    background-color: var(--inactive-text-color);
+  }
+}
+
+label:has(input:checked) {
+  background-color: red;
+}
+
+.theme_switch__label {
+  position: relative;
+  background-color: var(--inactive-text-color);
+  height: 22px;
+  width: 50px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:has(input:checked) {
+    background-color: var(--bgcolor-dark);
+  }
+
+  span {
+    transition: all 0.3s;
+    position: absolute;
+    display: block;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 2px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background-color: var(--bgcolor-dark);
+  }
+}
+
+@media (width <= 470px) {
+  .header {
+    flex-direction: column-reverse;
+    height: auto;
+    gap: 5px;
+  }
+  .action__buttons {
+    margin-left: auto;
+  }
+}
