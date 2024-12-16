@@ -2,9 +2,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { DocumentsIcon } from '../../icons/DocumentsIcon';
 import { PlayIcon } from '../../icons/PlayIcon';
 import styles from './Header.module.scss';
-import { setTheme } from '../../redux/slices/themeSlice';
+import { setTheme } from '../../redux/slices/ThemeSlice';
 import { languageModes } from '../../constants/languageModes';
-import { setLangLanguage } from '../../redux/slices/languageSlice';
+import { setLangLanguage } from '../../redux/slices/LanguageSlice';
+import { toggleCodeOutput } from '../../redux/slices/CodeOutputSlice';
 
 export const Header = () => {
   const { activeLangIndex } = useAppSelector((state) => state.lang);
@@ -21,6 +22,10 @@ export const Header = () => {
 
   function handleChangeLanguage(i: number, id: string) {
     dispatch(setLangLanguage({ index: i, id }));
+  }
+
+  function handleOpenCodeOutput() {
+    dispatch(toggleCodeOutput(true));
   }
 
   return (
@@ -43,7 +48,9 @@ export const Header = () => {
           {' '}
           <DocumentsIcon /> Copy
         </button>
-        <button className={`${styles.action__butt} ${styles.run__butt}`}>
+        <button
+          onClick={handleOpenCodeOutput}
+          className={`${styles.action__butt} ${styles.run__butt}`}>
           <PlayIcon /> Run
         </button>
 

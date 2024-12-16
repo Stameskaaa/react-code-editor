@@ -1,7 +1,7 @@
 import './App.css';
-import { TextEditor } from './components/TextEditor/TextEditor';
 import { Header } from './components/Header/Header';
 import { useEffect } from 'react';
+import { CodeWorkspace } from './components/CodeWorkspace/CodeWorkspace';
 
 function App() {
   useEffect(() => {
@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <TextEditor />
+      <CodeWorkspace />
     </div>
   );
 }

@@ -14,14 +14,16 @@ import { setTextForLanguage } from '../../redux/slices/EditorTextSlice';
 export function TextEditor() {
   const { currentTheme } = useAppSelector((state) => state.theme);
   const { activeLangIndex, activeLangId } = useAppSelector((state) => state.lang);
+  const { isOpen } = useAppSelector((state) => state.codeOutput);
   const textObject = useAppSelector((state) => state.editorText);
   const dispatch = useAppDispatch();
 
-  console.log(activeLangId);
-
-  const onChange = useCallback((value: string) => {
-    dispatch(setTextForLanguage({ languageName: activeLangId, text: value }));
-  }, []);
+  const onChange = useCallback(
+    (value: string) => {
+      dispatch(setTextForLanguage({ languageName: activeLangId, text: value }));
+    },
+    [activeLangId],
+  );
 
   const regexpLinter = linter((view) => {
     let diagnostics: Diagnostic[] = [];
@@ -53,9 +55,8 @@ export function TextEditor() {
   return (
     <CodeMirror
       autoFocus
-      className={styles.container}
+      className={`${styles.container} ${isOpen ? styles.reduced : null}`}
       value={textObject[activeLangId]}
-      height="100%"
       theme={currentTheme === 'dark' ? tokyoNight : tokyoNightDay}
       extensions={[
         languageModes[activeLangIndex].mode,

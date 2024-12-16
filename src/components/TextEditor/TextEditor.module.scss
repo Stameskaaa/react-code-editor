@@ -1,9 +1,16 @@
 .container {
-  height: calc(100vh - 40px);
+  transition: height 0.2s;
+  overflow-y: auto;
+  height: 100%;
   > div {
+    height: 100%;
     outline: none !important;
   }
   @media (width <= 470px) {
     height: calc(100vh - 76px);
   }
+}
+
+.reduced {
+  height: 60%;
 }
