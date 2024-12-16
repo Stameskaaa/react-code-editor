@@ -4,12 +4,11 @@ import { PlayIcon } from '../../icons/PlayIcon';
 import styles from './Header.module.scss';
 import { useState } from 'react';
 import { setTheme } from '../../redux/slices/themeSlice';
+import { languageModes } from '../../constants/languageModes';
+import { setLangIndex } from '../../redux/slices/languageSlice';
 
-interface Props {
-  languageList: string[];
-}
-export const Header: React.FC<Props> = ({ languageList }) => {
-  const [activeLangIndex, setActiveLangIndex] = useState<number>(0);
+export const Header = () => {
+  const { activeLangIndex } = useAppSelector((state) => state.lang);
   const { currentTheme } = useAppSelector((state) => state.theme);
   const dispatch = useAppDispatch();
 
@@ -21,17 +20,21 @@ export const Header: React.FC<Props> = ({ languageList }) => {
     }
   }
 
+  function handleChangeLanguage(index: number) {
+    dispatch(setLangIndex(index));
+  }
+
   return (
     <header className={styles.header}>
       <div className={styles.select_lang__buttons}>
-        {languageList.map((lang, i) => (
+        {languageModes.map((langObj, i) => (
           <button
-            key={lang}
-            onClick={() => setActiveLangIndex(i)}
+            key={langObj.name}
+            onClick={() => handleChangeLanguage(i)}
             className={`${styles.select_lang__butt} ${
               activeLangIndex === i ? styles.active : null
             }`}>
-            {lang}
+            {langObj.name}
           </button>
         ))}
       </div>

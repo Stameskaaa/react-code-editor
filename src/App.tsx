@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header languageList={['JavaScript', 'Python', 'C++']} />
+      <Header />
       <TextEditor />
     </div>
   );

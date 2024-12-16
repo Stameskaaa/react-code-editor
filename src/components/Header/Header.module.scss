@@ -82,7 +82,7 @@
 
 .theme_switch__input {
   position: absolute;
-  opacity: 0;
+  visibility: hidden;
 
   &:checked + span {
     left: 30px;
