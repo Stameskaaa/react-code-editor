@@ -25,13 +25,13 @@ export const OutputContent: React.FC<Props> = ({ loading, error, language, resul
     <div className={styles.container}>
       {language && (
         <>
-          <h1>Language:</h1>
+          <h1>Language</h1>
           <p>{language}</p>
         </>
       )}
       {result && (
         <>
-          <h1>Result:</h1>
+          <h1>Result</h1>
           <p>{result}</p>
         </>
       )}
