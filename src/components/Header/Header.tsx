@@ -14,7 +14,6 @@ export const Header = () => {
   const { currentTheme } = useAppSelector((state) => state.theme);
   const [copied, setCopied] = useState(false);
   const editorTextData = useAppSelector((state) => state.editorText);
-  const test = { text: 'dsadsaadsads' };
   const dispatch = useAppDispatch();
 
   function handleChangeTheme(e: React.ChangeEvent<HTMLInputElement>) {
@@ -60,7 +59,8 @@ export const Header = () => {
             className={`${styles.select_lang__butt} ${
               activeLangIndex === i ? styles.active : null
             }`}>
-            {langObj.name}
+            <span className={styles.lang_name}>{langObj.name}</span> <br />
+            <span className={styles.lang_version}>v.{langObj.version}</span>
           </button>
         ))}
       </div>
