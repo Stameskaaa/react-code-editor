@@ -121,7 +121,7 @@ label:has(input:checked) {
   }
 }
 
-@media (width <= 470px) {
+@media (width <= 530px) {
   .header {
     flex-direction: column-reverse;
     height: auto;
@@ -129,5 +129,22 @@ label:has(input:checked) {
   }
   .action__buttons {
     margin-left: auto;
+  }
+}
+
+.show__butt {
+  line-height: 14px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  &:hover,
+  &:focus {
+    background-color: #d6d8da;
+    border-color: #e2e6ea;
+  }
+
+  &:active {
+    background-color: #e2e6ea;
+    border-color: #d6d8db;
   }
 }

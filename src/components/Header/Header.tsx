@@ -5,14 +5,19 @@ import styles from './Header.module.scss';
 import { setTheme } from '../../redux/slices/ThemeSlice';
 import { languageModes } from '../../constants/languageModes';
 import { setLangLanguage } from '../../redux/slices/LanguageSlice';
-import { toggleCodeOutput } from '../../redux/slices/CodeOutputSlice';
+import { doExecute, toggleCodeOutput } from '../../redux/slices/CodeOutputSlice';
+import { useState } from 'react';
+import { ConsoleIcons } from '../../icons/ConsoleIcons';
 
 export const Header = () => {
-  const { activeLangIndex } = useAppSelector((state) => state.lang);
+  const { activeLangIndex, activeLangId } = useAppSelector((state) => state.lang);
   const { currentTheme } = useAppSelector((state) => state.theme);
+  const [copied, setCopied] = useState(false);
+  const editorTextData = useAppSelector((state) => state.editorText);
+  const test = { text: 'dsadsaadsads' };
   const dispatch = useAppDispatch();
 
-  function handleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeTheme(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
       dispatch(setTheme('light'));
     } else {
@@ -24,7 +29,24 @@ export const Header = () => {
     dispatch(setLangLanguage({ index: i, id }));
   }
 
+  function handleCopy() {
+    navigator.clipboard
+      .writeText(editorTextData[activeLangId])
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch((error) => {
+        console.error('Ошибка при копировании:', error);
+      });
+  }
+
   function handleOpenCodeOutput() {
+    dispatch(toggleCodeOutput(true));
+    dispatch(doExecute());
+  }
+
+  function handleShowOutput() {
     dispatch(toggleCodeOutput(true));
   }
 
@@ -44,9 +66,8 @@ export const Header = () => {
       </div>
 
       <div className={styles.action__buttons}>
-        <button className={`${styles.action__butt} ${styles.copy_butt}`}>
-          {' '}
-          <DocumentsIcon /> Copy
+        <button onClick={handleCopy} className={`${styles.action__butt} ${styles.copy_butt}`}>
+          <DocumentsIcon /> {copied ? 'Copied' : 'Copy'}
         </button>
         <button
           onClick={handleOpenCodeOutput}
@@ -54,9 +75,16 @@ export const Header = () => {
           <PlayIcon /> Run
         </button>
 
+        <button
+          onClick={handleShowOutput}
+          className={`${styles.action__butt} ${styles.show__butt}`}>
+          {' '}
+          <ConsoleIcons /> Show
+        </button>
+
         <label className={styles.theme_switch__label}>
           <input
-            onChange={handleCheckboxChange}
+            onChange={handleChangeTheme}
             type="checkbox"
             id="themeSwitch"
             name="theme-switch"

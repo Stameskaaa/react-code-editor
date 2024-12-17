@@ -5,7 +5,7 @@ import { CodeWorkspace } from './components/CodeWorkspace/CodeWorkspace';
 
 function App() {
   useEffect(() => {
-    const theme = localStorage.getItem('theme') || 'dark';
+    const theme = localStorage.getItem('theme') || 'light';
     document.body.className = theme;
   }, []);
 

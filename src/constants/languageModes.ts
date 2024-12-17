@@ -4,7 +4,7 @@ import { cpp } from '@codemirror/lang-cpp';
 import { Language } from '../types/types';
 
 export const languageModes: Language[] = [
-  { name: 'JavaScript', mode: javascript(), id: 'javascript' },
-  { name: 'Python', mode: python(), id: 'python' },
-  { name: 'C++', mode: cpp(), id: 'cpp' },
+  { name: 'JavaScript', mode: javascript(), id: 'javascript', version: '18.15.0' },
+  { name: 'Python', mode: python(), id: 'python', version: '3.10.0' },
+  { name: 'C++', mode: cpp(), id: 'cpp', version: '10.2.0' },
 ];

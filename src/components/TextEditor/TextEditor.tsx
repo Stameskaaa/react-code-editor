@@ -1,20 +1,18 @@
 import CodeMirror from '@uiw/react-codemirror';
-import { EditorView } from '@codemirror/view';
 import { useCallback } from 'react';
 import styles from './TextEditor.module.scss';
 import { tokyoNightDay } from '@uiw/codemirror-theme-tokyo-night-day';
 import { tokyoNight } from '@uiw/codemirror-theme-tokyo-night';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { languageModes } from '../../constants/languageModes';
-import { syntaxTree } from '@codemirror/language';
-import { linter, Diagnostic } from '@codemirror/lint';
-import { lintGutter } from '@codemirror/lint';
 import { setTextForLanguage } from '../../redux/slices/EditorTextSlice';
+import { highlightSelectionMatches } from '@codemirror/search';
+import { EditorView } from '@codemirror/view';
 
 export function TextEditor() {
   const { currentTheme } = useAppSelector((state) => state.theme);
   const { activeLangIndex, activeLangId } = useAppSelector((state) => state.lang);
-  const { isOpen } = useAppSelector((state) => state.codeOutput);
+  const { isOpen } = useAppSelector((state) => state.codeOutput.state);
   const textObject = useAppSelector((state) => state.editorText);
   const dispatch = useAppDispatch();
 
@@ -25,33 +23,6 @@ export function TextEditor() {
     [activeLangId],
   );
 
-  const regexpLinter = linter((view) => {
-    let diagnostics: Diagnostic[] = [];
-
-    syntaxTree(view.state)
-      .cursor()
-      .iterate((node) => {
-        if (node.name === 'RegExp') {
-          diagnostics.push({
-            from: node.from,
-            to: node.to,
-            severity: 'warning',
-            message: 'Regular expressions are FORBIDDEN',
-            actions: [
-              {
-                name: 'Remove',
-                apply(view, from, to) {
-                  view.dispatch({ changes: { from, to } });
-                },
-              },
-            ],
-          });
-        }
-      });
-
-    return diagnostics;
-  });
-
   return (
     <CodeMirror
       autoFocus
@@ -60,9 +31,8 @@ export function TextEditor() {
       theme={currentTheme === 'dark' ? tokyoNight : tokyoNightDay}
       extensions={[
         languageModes[activeLangIndex].mode,
-        regexpLinter,
-        lintGutter(),
         EditorView.lineWrapping,
+        highlightSelectionMatches(),
       ]}
       onChange={onChange}
     />

@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CodeOutputState {
-  isOpen: boolean;
+  state: {
+    isOpen: boolean;
+    executeFlag: boolean; //Флаг для выполнения запроса
+  };
 }
 
 const initialState: CodeOutputState = {
-  isOpen: false,
+  state: {
+    isOpen: false,
+    executeFlag: false,
+  },
 };
 
 const codeOutputSlice = createSlice({
@@ -14,13 +20,16 @@ const codeOutputSlice = createSlice({
   reducers: {
     toggleCodeOutput(state, action: PayloadAction<boolean>) {
       if (action.payload) {
-        state.isOpen = true;
+        state.state.isOpen = true;
       } else {
-        state.isOpen = false;
+        state.state.isOpen = false;
       }
+    },
+    doExecute(state) {
+      state.state.executeFlag = !state.state.executeFlag;
     },
   },
 });
 
-export const { toggleCodeOutput } = codeOutputSlice.actions;
+export const { toggleCodeOutput, doExecute } = codeOutputSlice.actions;
 export const codeOutputReducer = codeOutputSlice.reducer;

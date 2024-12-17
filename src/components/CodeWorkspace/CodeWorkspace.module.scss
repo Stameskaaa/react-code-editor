@@ -1,6 +1,6 @@
 .container {
   height: calc(100vh - 40px);
-  @media (width <= 470px) {
+  @media (width <= 530px) {
     height: calc(100vh - 76px);
   }
   background-color: var(--bgcolor-dark);
